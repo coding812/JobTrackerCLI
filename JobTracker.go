@@ -7,10 +7,11 @@ import (
 	"strings"
 )
 
+// formatting for text file
 const (
-    dateWidth = 12 
-    companyNameWidth = 15
-    interviewTypeWidth = 15
+	dateWidth          = 12
+	companyNameWidth   = 15
+	interviewTypeWidth = 15
 )
 
 func main() {
@@ -19,11 +20,11 @@ func main() {
 		log.Fatal(err)
 	}
 	defer file.Close() // closes the file when program finishes
-	printExisting() // prints all existing entries
-	
+	printExisting()    // prints all existing entries
+
 	if err := getInput(file); err != nil {
 		log.Fatalf("Failed to record input: %v", err)
-	} 
+	}
 }
 
 // Opens the JobsApplied.txt file, in read/write mode, or creates it if it does not exist
@@ -49,39 +50,39 @@ func openFile() (*os.File, error) {
 
 // Gets the input to be saved to the AppliedJobs.txt
 func getInput(file *os.File) error {
-    Println("What date did you apply?")
-    var date string
-    if _, err := Scanln(&date); err != nil {
-        return Errorf("date not valid: %v", err)
-    }
+	Println("What date did you apply?")
+	var date string
+	if _, err := Scanln(&date); err != nil {
+		return Errorf("date not valid: %v", err)
+	}
 
-    Println("What was the company name?")
-    var companyName string
-    if _, err := Scanln(&companyName); err != nil {
-        return Errorf("company name not valid: %v", err)
-    }
+	Println("What was the company name?")
+	var companyName string
+	if _, err := Scanln(&companyName); err != nil {
+		return Errorf("company name not valid: %v", err)
+	}
 
-    Println("What type of interview was it? Phone? Video call?")
-    var interviewType string
-    if _, err := Scanln(&interviewType); err != nil {
-        return Errorf("interview type not valid: %v", err)
-    }
+	Println("What type of interview was it? Phone? Video call?")
+	var interviewType string
+	if _, err := Scanln(&interviewType); err != nil {
+		return Errorf("interview type not valid: %v", err)
+	}
 
-    // Format the entry with padded fields
-    formattedEntry := padRight(date, dateWidth) + "    " + padRight(companyName, companyNameWidth) + "    " + padRight(interviewType, interviewTypeWidth) + "\n"
+	// Format the entry with padded fields
+	formattedEntry := padRight(date, dateWidth) + "    " + padRight(companyName, companyNameWidth) + "    " + padRight(interviewType, interviewTypeWidth) + "\n"
 
-    if _, err := file.WriteString(formattedEntry); err != nil {
-        return Errorf("failed to write to file: %v", err)
-    }
-    return nil
+	if _, err := file.WriteString(formattedEntry); err != nil {
+		return Errorf("failed to write to file: %v", err)
+	}
+	return nil
 }
 
 // Function to pad a string to a fixed width
 func padRight(str string, length int) string {
-    if len(str) >= length {
-        return str
-    }
-    return str + strings.Repeat(" ", length-len(str))
+	if len(str) >= length {
+		return str
+	}
+	return str + strings.Repeat(" ", length-len(str))
 }
 
 // Fetches all the current entries in the AppliedJobs.txt file and prints them out

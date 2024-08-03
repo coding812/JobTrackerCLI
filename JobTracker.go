@@ -40,7 +40,7 @@ func openFile() (*os.File, error) {
 	}
 	if fileInfo.Size() == 0 {
 		// Write initial information to the file
-		initialInfo := "Date Applied ---- Company Name ---- Interview Type\n"
+		initialInfo := "Date Applied --- Company Name --- Interview Type\n"
 		if _, err := file.WriteString(initialInfo); err != nil {
 			return nil, err
 		}
